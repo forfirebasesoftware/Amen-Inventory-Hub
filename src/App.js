@@ -235,22 +235,7 @@ const App = () => {
 
   // --- AI Analysis Logic ---
 
-  const handleGenerateAnalysis = async () => {
-    setIsAnalyzing(true);
-    setAnalysisResult('');
-    setIsAnalysisModalOpen(true);
-
-    const urgentItems = inventory.filter(item =>
-      item.currentStock <= item.reorderLevel && !item.isOrdered
-    );
-
-    if (urgentItems.length === 0) {
-      setAnalysisResult("All critical items are either well-stocked or an order has already been placed. No immediate ordering action is required.");
-      setIsAnalyzing(false);
-      return;
-    }
-
-    const itemDetails = urgentItems.map(item => ({
+ const itemDetails = urgentItems.map(item => ({
       name: item.name,
       currentStock: `${item.currentStock} ${item.unit}`,
       reorderLevel: `${item.reorderLevel} ${item.unit}`,
