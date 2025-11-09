@@ -1,7 +1,7 @@
 /* global __app_id __firebase_config __initial_auth_token */import React, { useState, useEffect, useMemo } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, setDoc, collection, query, onSnapshot, updateDoc, deleteDoc, addDoc, serverTimestamp, where } from 'firebase/firestore';
+import { getFirestore, doc, collection, query, onSnapshot, updateDoc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // ====================================================================================
 // --- CONFIGURATION SETUP (ACTION REQUIRED FOR DEPLOYMENT) ---
@@ -26,17 +26,13 @@ const hardcodedFirebaseConfig = {apiKey: "AIzaSyAZY4-1fy8AighnzuCvmVQh8tQIiEMJMb
   appId: "1:501422459243:web:36143eca6544dd8fa3a42e",
   measurementId: "G-6LF6ZPSLM3"}; 
 // Keep this as null for external, simple deployment
-const hardcodedInitialAuthToken = null;
 
-// Determine which values to use: prioritize environment values if available
-const appId = Object.keys(envFirebaseConfig).length ? envAppId : envAppId; 
-const firebaseConfig = Object.keys(envFirebaseConfig).length ? envFirebaseConfig : hardcodedFirebaseConfig;
-const initialAuthToken = envInitialAuthToken || hardcodedInitialAuthToken;
+
 
 
 // API Configuration
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=`;
-const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
+
 const MAX_RETRIES = 5;
 const INITIAL_BACKOFF_MS = 1000;
 
@@ -174,7 +170,7 @@ const App = () => {
 
       return () => unsubscribe();
     }
-  }, [db, userId]);
+  }, [ userId]);
 
   // --- Inventory Operations ---
 
@@ -231,28 +227,7 @@ const App = () => {
     }
   };
 
-  const handleUpdateStock = async (id, currentStock, newQuantity) => {
-    if (!userId) return;
-    const item = inventory.find(i => i.id === id);
-    if (!item) return;
-
-    const newStock = parseFloat(currentStock) + parseFloat(newQuantity);
-
-    // Reset isOrdered flag if stock replenishment brings it well above the reorder level
-    const shouldResetOrderFlag = newStock > item.reorderLevel;
-
-    try {
-      const docRef = doc(db, `/artifacts/${appId}/users/${userId}/inventory`, id);
-      await updateDoc(docRef, {
-        currentStock: newStock,
-        updatedAt: serverTimestamp(),
-        isOrdered: shouldResetOrderFlag ? false : item.isOrdered, // Reset if fully restocked
-        expectedDelivery: shouldResetOrderFlag ? null : item.expectedDelivery,
-      });
-    } catch (e) {
-      console.error("Error updating stock: ", e);
-    }
-  };
+  
 
   const handleMarkAsOrdered = async (item, deliveryDate) => {
     if (!userId) return;
