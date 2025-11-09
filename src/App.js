@@ -27,16 +27,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// The following lines MUST be replaced with your own keys when you deploy externally.
-// Replace {} with your full Firebase configuration object { apiKey: "...", authDomain: "...", etc. }
-const hardcodedFirebaseConfig = {apiKey: "AIzaSyAZY4-1fy8AighnzuCvmVQh8tQIiEMJMbo",
-  authDomain: "amen-bar-and-restaurant-e70ae.firebaseapp.com",
-  projectId: "amen-bar-and-restaurant-e70ae",
-  storageBucket: "amen-bar-and-restaurant-e70ae.firebasestorage.app",
-  messagingSenderId: "501422459243",
-  appId: "1:501422459243:web:36143eca6544dd8fa3a42e",
-  measurementId: "G-6LF6ZPSLM3"}; 
-// Keep this as null for external, simple deployment
+ 
+
 
 
 
@@ -238,19 +230,7 @@ const App = () => {
 
   
 
-  const handleMarkAsOrdered = async (item, deliveryDate) => {
-    if (!userId) return;
-    try {
-      const docRef = doc(db, `/artifacts/${appId}/users/${userId}/inventory`, item.id);
-      await updateDoc(docRef, {
-        isOrdered: true,
-        expectedDelivery: new Date(deliveryDate),
-        updatedAt: serverTimestamp(),
-      });
-    } catch (e) {
-      console.error("Error marking as ordered: ", e);
-    }
-  };
+ 
 
 
   // --- AI Analysis Logic ---
