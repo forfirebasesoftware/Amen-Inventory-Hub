@@ -468,7 +468,7 @@ const App = () => {
           <button
             onClick={handleGenerateAnalysis}
             disabled={isAnalyzing}
-           471 className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
+            className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
    isAnalyzing ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700'
  } flex items-center`} // ✨ FIX: ADD THE CLOSING BACKTICK HERE!
 >
