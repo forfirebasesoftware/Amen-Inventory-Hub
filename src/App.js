@@ -48,9 +48,7 @@ const MAX_RETRIES = 5;
 const INITIAL_BACKOFF_MS = 1000;
 
 // Initialize Firebase (outside component for singleton)
-const app = Object.keys(firebaseConfig).length ? initializeApp(firebaseConfig) : null;
-const db = app ? getFirestore(app) : null;
-const auth = app ? getAuth(app) : null;
+
 
 // Utility functions
 const formatCurrency = (amount) => {
