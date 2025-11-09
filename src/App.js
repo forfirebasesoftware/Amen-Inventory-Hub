@@ -26,13 +26,6 @@ const initialAuthToken = process.env.REACT_APP_INITIAL_AUTH_TOKEN;
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
- 
-
-
-
-
-
 // API Configuration
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=`;
 
@@ -40,14 +33,11 @@ const MAX_RETRIES = 5;
 const INITIAL_BACKOFF_MS = 1000;
 
 // Initialize Firebase (outside component for singleton)
-
-
 // Utility functions
 const formatCurrency = (amount) => {
   if (isNaN(amount) || amount === null) return 'ETB 0.00';
   return `ETB ${parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 };
-
 const formatDate = (timestamp) => {
   if (!timestamp) return 'N/A';
   if (timestamp.toDate) {
@@ -63,7 +53,6 @@ const formatDate = (timestamp) => {
     day: 'numeric',
   });
 };
-
 // --- API CALL FUNCTION with exponential backoff ---
 const callGeminiApi = async (systemInstruction, userQuery, maxRetries = MAX_RETRIES) => {
   const payload = {
@@ -71,7 +60,6 @@ const callGeminiApi = async (systemInstruction, userQuery, maxRetries = MAX_RETR
     tools: [{ "google_search": {} }], // Optional: for grounding
     systemInstruction: { parts: [{ text: systemInstruction }] },
   };
-
   for (let i = 0; i < maxRetries; i++) {
     try {
       const response = await fetch(GEMINI_API_URL, {
@@ -89,7 +77,6 @@ const callGeminiApi = async (systemInstruction, userQuery, maxRetries = MAX_RETR
       if (!response.ok) {
         throw new Error(`API call failed with status: ${response.status}`);
       }
-
       const result = await response.json();
       const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "No analysis generated.";
       return text;
@@ -101,8 +88,6 @@ const callGeminiApi = async (systemInstruction, userQuery, maxRetries = MAX_RETR
     }
   }
 };
-
-
 // --- APP COMPONENT ---
 const App = () => {
   const [inventory, setInventory] = useState([]);
@@ -123,8 +108,7 @@ const App = () => {
       console.error("Firebase not initialized.");
       return;
     }
-
-    // Set up Auth State Listener
+// Set up Auth State Listener
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserId(user.uid);
@@ -498,12 +482,14 @@ const App = () => {
         {/* Search and Filter */}
         <div className="mb-6 bg-white p-4 rounded-xl shadow-md border border-gray-200 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
           <input
-            type="text"
-            placeholder="Search by Ingredient or Vendor..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-2/3 rounded-lg border-gray-300 shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500"
-          />
+           // src/App.js (Corrected)
+
+           onClick={handleGenerateAnalysis}
+            disabled={isAnalyzing}
+             className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
+               isAnalyzing ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700'
+             } flex items-center`} // ✨ FIX: The missing backtick is now added here!
+           >
           <label className="flex items-center space-x-2 text-gray-700 cursor-pointer">
             <input
               type="checkbox"
