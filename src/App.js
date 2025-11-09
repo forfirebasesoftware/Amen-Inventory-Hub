@@ -257,11 +257,19 @@ const App = () => {
 
     const userQuery = `Analyze the following urgent inventory items and provide a reordering plan for Amen Bar and Restaurant.
 
-    Inventory Data (ETB, Kilograms, Liters):
-    ${JSON.stringify(itemDetails, null, 2)}
-    `;
+    // In src/App.js, around the line where handleAnalyze is defined:
 
-   const myAnalysisFunction = async () => {
+  const handleAnalyze = async () => { // ✨ FIX: ADD 'async' HERE!
+    if (!analysisInput.trim()) {
+      alert("Please enter a question or context for analysis.");
+      return;
+    }
+    setIsAnalyzing(true);
+    setAnalysisResult(null);
+
+    // ... systemPrompt and userQuery definitions ...
+
+    const result = await callGeminiApi(systemPrompt, userQuery); // This is line 264. It is now correct.
     setAnalysisResult(result);
     setIsAnalyzing(false);
   };
