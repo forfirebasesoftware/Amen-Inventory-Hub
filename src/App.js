@@ -261,7 +261,7 @@ const App = () => {
     ${JSON.stringify(itemDetails, null, 2)}
     `;
 
-    const result = await callGeminiApi(systemPrompt, userQuery);
+   const myAnalysisFunction = async () => {
     setAnalysisResult(result);
     setIsAnalyzing(false);
   };
