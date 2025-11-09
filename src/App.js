@@ -11,10 +11,21 @@ import { getFirestore, doc, collection, query, onSnapshot, updateDoc, deleteDoc,
 // DO NOT PASTE THESE KEYS IN THE CHAT FOR SECURITY.
 // ====================================================================================
 
-// Retrieve environment variables provided by the canvas/runtime (for testing here)
-const envAppId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id-for-external-use';
-const envFirebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-const envInitialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+// PASTE THIS FINAL BLOCK HERE:
+
+// 1. Define the final configuration object using the secure Netlify variables
+const firebaseConfig = process.env.REACT_APP_FIREBASE_CONFIG
+  ? JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG)
+  : null;
+
+// 2. Define the variables the rest of your app needs:
+const appId = process.env.REACT_APP_APP_ID;
+const initialAuthToken = process.env.REACT_APP_INITIAL_AUTH_TOKEN;
+
+// 3. Initialize Firebase services once
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 // The following lines MUST be replaced with your own keys when you deploy externally.
 // Replace {} with your full Firebase configuration object { apiKey: "...", authDomain: "...", etc. }
