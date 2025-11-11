@@ -468,10 +468,9 @@ const App = () => {
           <button
             onClick={handleGenerateAnalysis}
             disabled={isAnalyzing}
-            className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
+           className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
               isAnalyzing ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700'
-            } flex items-center`}
->
+            } flex items-center}`}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM5 8a1 1 0 011-1h1.586l1.293-1.293A1 1 0 0110 5.414V7h1a1 1 0 110 2H6a1 1 0 01-1-1zM15 12a1 1 0 01-1 1h-1.586l-1.293 1.293A1 1 0 0110 14.586V13H9a1 1 0 110-2h5a1 1 0 011 1z" />
             </svg>
