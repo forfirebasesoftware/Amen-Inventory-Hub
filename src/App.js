@@ -483,9 +483,7 @@ const App = () => {
 
            onClick={handleGenerateAnalysis}
             disabled={isAnalyzing}
-             className={`px-6 py-3 text-white rounded-full shadow-xl transition duration-150 ${
-               isAnalyzing ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700'
-             } flex items-center`} // ✨ FIX: The missing backtick is now added here!
+            className={isAnalyzing ? 'px-6 py-3 text-white rounded-full shadow-xl transition duration-150 bg-orange-400 cursor-not-allowed flex items-center' : 'px-6 py-3 text-white rounded-full shadow-xl transition duration-150 bg-orange-600 hover:bg-orange-700 flex items-center'}
            >
           <label className="flex items-center space-x-2 text-gray-700 cursor-pointer">
             <input
