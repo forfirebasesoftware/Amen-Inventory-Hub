@@ -532,6 +532,7 @@ const App = () => {
                       <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
                       // This line replaces the faulty <span> element definition around Line 534
+// This block replaces the broken <span> element definition (around Lines 535-539)
 <span
   className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}`}
 >
