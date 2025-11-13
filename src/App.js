@@ -531,7 +531,12 @@ const App = () => {
                     <tr key={item.id} className="hover:bg-gray-50 transition duration-150">
                       <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}`}>
+                      // This line replaces the faulty <span> element definition around Line 534
+<span
+  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}`}
+>
+  {status}
+</span>
                           {status}
                         </span>
                         {item.isOrdered && item.expectedDelivery && (
